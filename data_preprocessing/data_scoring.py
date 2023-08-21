@@ -26,7 +26,7 @@ def score_data(dataframe, untimed_tasks: list, timed_tasks: list):
     """This is a docstring!"""
     
     for task in untimed_tasks:
-        pattern = task + r'((?!end|tt|or|p|number|Stop|item|time|duration).)*$'
+        pattern = task + r'((?!end|tt|or|p|number|Stop|item|time|duration|strategy|b|c).)*$'
         score_cols = [col for col in dataframe.columns if re.search(pattern, col)]
 
         score_total = task + '_total'
@@ -35,7 +35,7 @@ def score_data(dataframe, untimed_tasks: list, timed_tasks: list):
         dataframe.loc[:, score_percent_correct] = dataframe.apply(lambda x: 100*x[score_total]/len(score_cols), axis=1)
 
     for task in timed_tasks:
-        score_pattern = task + r'((?!end|or|p|number|Stop|item|time|duration).)*$'
+        score_pattern = task + r'((?!end|or|p|number|Stop|item|time|duration|strategy).)*$'
         score_cols = [col for col in dataframe.columns if re.search(score_pattern, col)]
         time_pattern = task + r'.*(time_remaining)$'
         duration_col = [col for col in dataframe.columns if re.search(time_pattern, col)]
